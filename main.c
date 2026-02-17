@@ -60,6 +60,10 @@ int main(int argc, char** argv){
     while(1){
         printf("%s ", fulllogin);
         scanf("%s", userInput);
+        commandIndex = find_builtin(userInput);
+        if (commandIndex >= 0){
+            builtins[commandIndex].func(argc-1, argv+1);
+        }
     }
 
 
