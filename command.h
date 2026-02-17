@@ -11,6 +11,9 @@ struct command {
     char **argv;
 };
 
+int count_args(const char* s);
+struct command* parse_cmd(const char* buf, int len);
+
 
 
 #endif
