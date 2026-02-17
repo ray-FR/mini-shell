@@ -1,4 +1,4 @@
-#Credits: Pablo Rauzy (pablo.rauzy.name)
+#Credits: Pablo Rauzy (https://pablo.rauzy.name)
 
 SRC = $(wildcard *.c)
 OBJ = $(subst .c,.o,$(SRC))
