@@ -25,12 +25,12 @@ char* getfulllogin(void){
     strcat(name, host);
     strcat(name, ":");
     strcat(name, cwd);
-    fprintf(stderr, "%s\n", name);
     
     return name;
 }
 
 int main(int argc, char** argv){
-
+    char* fulllogin = getfulllogin();
+    printf("%s\n", fulllogin);
     return 0;
 }
