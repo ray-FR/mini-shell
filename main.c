@@ -32,6 +32,14 @@ char* getfulllogin(void){
 int main(int argc, char** argv){
     char userInput[256];
     char* fulllogin = getfulllogin();
-    printf("%s\n", fulllogin);
+
+    while(1){
+        printf("%s ", fulllogin);
+        scanf("%s", userInput);
+    }
+
+
+
+
     return 0;
 }
