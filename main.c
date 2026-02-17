@@ -30,6 +30,8 @@ char* getFullLogin(void){
 }
 
 int main(int argc, char** argv){
+    (void) argc;
+    (void) argv;
     char userInput[256];
     char* fulllogin = getFullLogin();
 
