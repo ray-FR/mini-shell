@@ -3,7 +3,7 @@
 #include <string.h>
 #include <unistd.h>
 
-char* getfulllogin(void){
+char* getFullLogin(void){
     char* name;
     char host[256];
     char cwd[256];
@@ -31,7 +31,7 @@ char* getfulllogin(void){
 
 int main(int argc, char** argv){
     char userInput[256];
-    char* fulllogin = getfulllogin();
+    char* fulllogin = getFullLogin();
 
     while(1){
         printf("%s ", fulllogin);
