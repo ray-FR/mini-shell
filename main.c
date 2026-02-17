@@ -5,6 +5,9 @@
 
 #define NB_BUILTINS 1
 
+int builtin_exit(int, char**);
+
+
 struct builtin {
     char *name;
     int (*func)(int, char **);
