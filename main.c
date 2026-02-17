@@ -42,6 +42,9 @@ char* getFullLogin(void){
     return name;
 }
 
+int find_builtin(char* command){
+}
+
 int main(int argc, char** argv){
     (void) argc;
     (void) argv;
