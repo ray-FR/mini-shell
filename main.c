@@ -64,6 +64,13 @@ int main(int argc, char** argv){
         if (commandIndex >= 0){
             builtins[commandIndex].func(argc-1, argv+1);
         }
+        else{
+            printf("bash: command not found: %s\n", userInput);
+            printf("Available built-in commands:\n");
+            for (int i = 0; i < NB_BUILTINS; i++){
+                printf("\t%s\n", builtins[i].name);
+            }
+        }
     }
 
 
