@@ -6,5 +6,11 @@
 #include <string.h>
 #include <ctype.h>
 
+struct command {
+    int argc;
+    char **argv;
+};
+
+
 
 #endif
