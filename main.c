@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include "command.h"
 
 #define NB_BUILTINS 1
 
