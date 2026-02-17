@@ -43,6 +43,13 @@ char* getFullLogin(void){
 }
 
 int find_builtin(char* command){
+    for (int i = 0; i < NB_BUILTINS; i++){
+        if (strcmp(command, builtins[i].name) == 0){
+            return i;
+        }
+    }
+    return -1;
+
 }
 
 int main(int argc, char** argv){
