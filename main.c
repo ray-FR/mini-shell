@@ -3,6 +3,12 @@
 #include <string.h>
 #include <unistd.h>
 
+struct builtin {
+    char *name;
+    int (*func)(int, char **);
+};
+
+
 char* getFullLogin(void){
     char* name;
     char host[256];
