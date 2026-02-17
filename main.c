@@ -3,6 +3,8 @@
 #include <string.h>
 #include <unistd.h>
 
+#define NB_BUILTINS 1
+
 struct builtin {
     char *name;
     int (*func)(int, char **);
