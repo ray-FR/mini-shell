@@ -11,6 +11,8 @@ int builtin_exit(int, char**);
 struct builtin {
     char *name;
     int (*func)(int, char **);
+} builtins[NB_BUILTINS] = {
+    { "exit", builtin_exit},
 };
 
 
