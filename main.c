@@ -53,8 +53,6 @@ int find_builtin(char* command){
 }
 
 int main(int argc, char** argv){
-    (void) argc;
-    (void) argv;
     char userInput[256];
     int commandIndex;
     char* fulllogin = getFullLogin();
