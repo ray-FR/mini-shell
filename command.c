@@ -36,3 +36,12 @@ struct command * parse_cmd(const char *buf, int len)
     cmd->argv[cmd->argc] = NULL;
     return cmd;
 }
+
+void free_cmd(struct command* cmd){
+    for(int i = 0; i<cmd->argc;i++){
+        free(cmd->argv[i]);
+        cmd->argv[i] = NULL;
+    }
+    free(cmd->argv);
+    free(cmd);
+}
