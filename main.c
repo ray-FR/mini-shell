@@ -58,14 +58,15 @@ int find_builtin(char* command){
 int main(int argc, char** argv){
     (void) argc;
     (void) argv;
+    char* fullLogin;
     char userInput[256];
     int commandIndex;
     struct command* cmd;
 
-    char* fulllogin = getFullLogin();
+    fullLogin = getFullLogin();
 
     while(1){
-        printf("%s ", fulllogin);
+        printf("%s ", fullLogin);
         fgets(userInput, 256, stdin);
         cmd = parse_cmd(userInput, strlen(userInput));
         commandIndex = find_builtin(cmd->argv[0]);
