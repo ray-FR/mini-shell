@@ -13,6 +13,7 @@ struct command {
 
 int count_args(const char* s);
 struct command* parse_cmd(const char* buf, int len);
+void free_cmd(struct command* cmd);
 
 
 
