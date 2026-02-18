@@ -4,9 +4,10 @@
 #include <unistd.h>
 #include "command.h"
 
-#define NB_BUILTINS 1
+#define NB_BUILTINS 2
 
 int builtin_exit(int, char**);
+int builtin_cd(int, char**);
 
 
 struct builtin {
@@ -14,6 +15,7 @@ struct builtin {
     int (*func)(int, char **);
 } builtins[NB_BUILTINS] = {
     { "exit", builtin_exit},
+    { "cd", builtin_cd},
 };
 
 
