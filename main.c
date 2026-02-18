@@ -66,7 +66,7 @@ int main(int argc, char** argv){
 
     while(1){
         printf("%s ", fulllogin);
-        scanf("%s", userInput);
+        fgets(userInput, 256, stdin);
         cmd = parse_cmd(userInput, strlen(userInput));
         commandIndex = find_builtin(cmd->argv[0]);
         if (commandIndex >= 0){
