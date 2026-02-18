@@ -56,11 +56,14 @@ int find_builtin(char* command){
 int main(int argc, char** argv){
     char userInput[256];
     int commandIndex;
+    struct command* cmd;
+
     char* fulllogin = getFullLogin();
 
     while(1){
         printf("%s ", fulllogin);
         scanf("%s", userInput);
+        cmd = parse_cmd(userInput, strlen(userInput));
         commandIndex = find_builtin(userInput);
         if (commandIndex >= 0){
             builtins[commandIndex].func(argc-1, argv+1);
