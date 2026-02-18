@@ -1,7 +1,6 @@
-#Credits: Pablo Rauzy (https://pablo.rauzy.name)
 
 SRC = $(wildcard *.c)
-OBJ = $(subst .c,.o,$(SRC))
+OBJ = $(patsubst %.c,./obj/%.o,$(SRC))
 BIN = $(subst .c,,$(SRC))
 
 mini-shell: $(OBJ)
@@ -10,9 +9,11 @@ mini-shell: $(OBJ)
 %: %.c
 	gcc -W -Wall -Werror -DSTANDALONE $< -o $@
 
-%.o: %.c
+./obj/%.o: %.c
+	@mkdir -p ./obj
 	gcc -c -W -Wall -Werror $< -o $@
 
 clean::
-	rm -f $(OBJ) $(BIN)
+	rm -rf ./obj/
+	rm -f $(BIN)
 	rm -f .DS_Store
