@@ -72,6 +72,8 @@ int main(int argc, char** argv){
         commandIndex = find_builtin(cmd->argv[0]);
         if (commandIndex >= 0){
             builtins[commandIndex].func(cmd->argc, cmd->argv);
+            strcpy(fullLogin, "");
+            fullLogin = getFullLogin();
         }
         else{
             printf("bash: command not found: %s\n", userInput);
