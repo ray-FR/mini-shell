@@ -11,12 +11,12 @@ int exec_cmd(struct command* cmd){
         exit(1);
     }
     if (pid == 0){
-        int errcode = execvp(cmd->argv[0], &(cmd->argv[0]));
+        execvp(cmd->argv[0], &(cmd->argv[0]));
         perror("execvp");
-        return errcode;
-    } else 
-        wait(NULL);
+        
+    } else waitpid(pid, NULL, 0);
     return 0;
 
+    
     
 }
