@@ -1,10 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include "command.h"
 
-int builtin_cd(int argc, char** argv){
 
-    if(chdir(argv[argc-1]) < 0){
+int builtin_cd(struct command* cmd){
+
+    if(chdir(cmd->argv[(cmd->argc)-1]) < 0){
         perror("chdir");
         return 1;
     }
