@@ -8,6 +8,7 @@
 
 int builtin_exit(int, char**);
 int builtin_cd(int, char**);
+int exec_cmd(struct command* cmd);
 
 
 struct builtin {
@@ -76,12 +77,21 @@ int main(int argc, char** argv){
             fullLogin = getFullLogin();
         }
         else{
-            printf("bash: command not found: %s\n", userInput);
+            printf("mini-shell: built_in command not found: %s\n", userInput);
             printf("Available built-in commands:\n");
             for (int i = 0; i < NB_BUILTINS; i++){
                 printf("\t%s\n", builtins[i].name);
             }
+            printf("\nDo you want to search for commands within the shell? (yes/no) ");
+            strcpy(userInput, "");
+            fgets(userInput, 256, stdin);
+            if (strncmp(userInput, "yes", 3) == 0){
+                if (exec_cmd(cmd) != 0) printf("bash: command not found: %s\n", userInput);
+            }
+
         }
+        strcpy(userInput, "");
+        free_cmd(cmd);
     }
 
 
