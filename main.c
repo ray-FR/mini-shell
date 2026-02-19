@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <signal.h>
 #include "command.h"
 
 #define NB_BUILTINS 2
@@ -67,6 +68,7 @@ int main(int argc, char** argv){
     fullLogin = getFullLogin();
 
     while(1){
+        signal(SIGINT, SIG_IGN);
         printf("%s ", fullLogin);
         fgets(userInput, 256, stdin);
         cmd = parse_cmd(userInput, strlen(userInput));
