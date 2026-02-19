@@ -57,10 +57,9 @@ int find_builtin(char* command){
 
 }
 
-int main(int argc, char** argv){
-    (void) argc;
-    (void) argv;
+int main(){
     char* fullLogin;
+    char* pipe;
     char userInput[256];
     int commandIndex;
     struct command* cmd;
@@ -71,6 +70,9 @@ int main(int argc, char** argv){
         signal(SIGINT, SIG_IGN);
         printf("%s ", fullLogin);
         fgets(userInput, 256, stdin);
+        if (strchr(userInput, '|') != NULL){
+            printf("yes\n");
+        }
         cmd = parse_cmd(userInput, strlen(userInput));
         commandIndex = find_builtin(cmd->argv[0]);
         if (commandIndex >= 0){
