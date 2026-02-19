@@ -6,14 +6,14 @@
 
 #define NB_BUILTINS 2
 
-int builtin_exit(int, char**);
-int builtin_cd(int, char**);
+int builtin_exit(struct command* cmd);
+int builtin_cd(struct command* cmd);
 int exec_cmd(struct command* cmd);
 
 
 struct builtin {
     char *name;
-    int (*func)(int, char **);
+    int (*func)(struct command* cmd);
 } builtins[NB_BUILTINS] = {
     { "exit", builtin_exit},
     { "cd", builtin_cd},
@@ -72,7 +72,7 @@ int main(int argc, char** argv){
         cmd = parse_cmd(userInput, strlen(userInput));
         commandIndex = find_builtin(cmd->argv[0]);
         if (commandIndex >= 0){
-            builtins[commandIndex].func(cmd->argc, cmd->argv);
+            builtins[commandIndex].func(cmd);
             strcpy(fullLogin, "");
             fullLogin = getFullLogin();
         }
