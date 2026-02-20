@@ -60,6 +60,10 @@ int find_builtin(char* command){
 int main(){
     char* fullLogin;
     char* pipe;
+    char* firstCmd;
+    char* secondCmd;
+
+
     char buf[256];
     int commandIndex;
     struct command* cmd;
@@ -71,7 +75,9 @@ int main(){
         printf("%s ", fullLogin);
         fgets(buf, 256, stdin);
         if ((pipe = strchr(buf, '|')) != NULL){
-            printf("yes\n");
+            firstCmd = strndup(buf, pipe-buf); //what the fuck
+            secondCmd = strndup(pipe+2, strlen(buf)); 
+            printf("1: %s\n2: %s\n", firstCmd, secondCmd);
         }
         cmd = parse_cmd(buf, strlen(buf));
         commandIndex = find_builtin(cmd->argv[0]);
