@@ -80,7 +80,6 @@ int main(){
         if ((pipe = strchr(buf, '|')) != NULL){
             firstCmd = strndup(buf, pipe-buf); 
             secondCmd = strndup(pipe+1, strlen(buf)); 
-            printf("1: %s\n2: %s\n", firstCmd, secondCmd);
             cmd = parse_cmd(firstCmd, strlen(firstCmd));
             cmd2 = parse_cmd(secondCmd, strlen(secondCmd));
             exec_piped_cmds(cmd, cmd2);
