@@ -75,7 +75,7 @@ int main(){
         printf("%s ", fullLogin);
         fgets(buf, 256, stdin);
         if ((pipe = strchr(buf, '|')) != NULL){
-            firstCmd = strndup(buf, pipe-buf); //what the fuck
+            firstCmd = strndup(buf, pipe-buf); 
             secondCmd = strndup(pipe+2, strlen(buf)); 
             printf("1: %s\n2: %s\n", firstCmd, secondCmd);
         }
