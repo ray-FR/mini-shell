@@ -28,8 +28,11 @@ struct command * parse_cmd(const char *buf, int len)
     for (int i = 0; i < len; i++) {
         if (!isspace(buf[i]) && isspace(prev)) { 
             beg = i; 
+            if (strcmp(buf[i], "\"") == 0){
+                isAQuote = 1;
+            }
         }
-        else if (isspace(buf[i]) && !isspace(prev)) {
+        else if (isspace(buf[i]) && !isspace(prev) && !isAQuote) {
             cmd->argv[cmd->argc++] = strndup(buf + beg, i - beg);
         }
         prev = buf[i];
