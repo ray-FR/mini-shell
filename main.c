@@ -71,9 +71,10 @@ int main(){
     struct command* cmd2;
 
     fullLogin = getFullLogin();
+    signal(SIGINT, SIG_IGN);
 
     while(1){
-        signal(SIGINT, SIG_IGN);
+        
         printf("%s ", fullLogin);
         fgets(buf, 256, stdin);
         if ((pipe = strchr(buf, '|')) != NULL){
@@ -83,6 +84,9 @@ int main(){
             cmd = parse_cmd(firstCmd, strlen(firstCmd));
             cmd2 = parse_cmd(secondCmd, strlen(secondCmd));
             exec_piped_cmds(cmd, cmd2);
+            free_cmd(cmd2);
+            strcpy(firstCmd, "");
+            strcpy(secondCmd, "");
         }
         else {
             cmd = parse_cmd(buf, strlen(buf));
