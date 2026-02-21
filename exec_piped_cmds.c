@@ -33,4 +33,15 @@ void exec_piped_cmds(struct command* cmd1, struct command* cmd2){
         exit(1);
     }
 
+    if (pid2 == 0){
+        if ((fdexec2 = dup2(1, 0)) < 0){
+            perror("fdexec2");
+            exit(1);
+        }
+        close(fdexec2);
+        execvp(cmd2->argv[0], &(cmd2->argv[0]));
+    }
+
+
+
 }
