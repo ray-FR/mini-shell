@@ -23,7 +23,8 @@ void exec_piped_cmds(struct command* cmd1, struct command* cmd2){
             perror("fdexec1");
             exit(1);
         }
-        close(0);
+        close(fdexec1);
+        execvp(cmd1->argv[0], &(cmd1->argv[0]));
         
 
     }
