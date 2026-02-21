@@ -16,6 +16,8 @@ struct command * parse_cmd(const char *buf, int len)
     struct command *cmd = NULL;
     char prev = ' ';
     int n, beg = 0;
+    int isAQuote = 0;
+
 
     if ((n = count_args(buf)) == 0) return NULL;
 
