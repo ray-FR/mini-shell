@@ -41,6 +41,12 @@ void exec_piped_cmds(struct command* cmd1, struct command* cmd2){
         close(fdexec2);
         execvp(cmd2->argv[0], &(cmd2->argv[0]));
     }
+    else {
+        close(0);
+        close(1);
+        waitpid(pid1, NULL, 0);
+        waitpid(pid2, NULL, 0);
+    }
 
 
 
