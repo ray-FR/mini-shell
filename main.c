@@ -10,6 +10,7 @@
 int builtin_exit(struct command* cmd);
 int builtin_cd(struct command* cmd);
 int exec_cmd(struct command* cmd);
+void exec_piped_cmds(struct command* cmd1, struct command* cmd2);
 
 
 struct builtin {
@@ -67,6 +68,7 @@ int main(){
     char buf[256];
     int commandIndex;
     struct command* cmd;
+    struct command* cmd2;
 
     fullLogin = getFullLogin();
 
@@ -76,30 +78,34 @@ int main(){
         fgets(buf, 256, stdin);
         if ((pipe = strchr(buf, '|')) != NULL){
             firstCmd = strndup(buf, pipe-buf); 
-            secondCmd = strndup(pipe+2, strlen(buf)); 
+            secondCmd = strndup(pipe+1, strlen(buf)); 
             printf("1: %s\n2: %s\n", firstCmd, secondCmd);
+            cmd = parse_cmd(firstCmd, strlen(firstCmd));
+            cmd2 = parse_cmd(secondCmd, strlen(secondCmd));
+            exec_piped_cmds(cmd, cmd2);
         }
-        cmd = parse_cmd(buf, strlen(buf));
-        commandIndex = find_builtin(cmd->argv[0]);
-        if (commandIndex >= 0){
-            builtins[commandIndex].func(cmd);
-            strcpy(fullLogin, "");
-            fullLogin = getFullLogin();
-        }
-        else{
-            printf("mini-shell: built_in command not found: %s\n", buf);
-            printf("Available built-in commands:\n");
-            for (int i = 0; i < NB_BUILTINS; i++){
-                printf("\t%s\n", builtins[i].name);
+        else {
+            cmd = parse_cmd(buf, strlen(buf));
+            commandIndex = find_builtin(cmd->argv[0]);
+            if (commandIndex >= 0){
+                builtins[commandIndex].func(cmd);
+                strcpy(fullLogin, "");
+                fullLogin = getFullLogin();
             }
-            printf("\nDo you want to search for commands within the shell? (yes/no) ");
-            strcpy(buf, "");
-            fgets(buf, 256, stdin);
-            if (strncmp(buf, "yes", 3) == 0){
-                if (exec_cmd(cmd) != 0) printf("bash: command not found: %s\n", buf);
-            }
+            else{
+                printf("mini-shell: built_in command not found: %s\n", buf);
+                printf("Available built-in commands:\n");
+                for (int i = 0; i < NB_BUILTINS; i++){
+                    printf("\t%s\n", builtins[i].name);
+                }
+                printf("\nDo you want to search for commands within the shell? (yes/no) ");
+                strcpy(buf, "");
+                fgets(buf, 256, stdin);
+                if (strncmp(buf, "yes", 3) == 0){
+                    if (exec_cmd(cmd) != 0) printf("bash: command not found: %s\n", buf);
+                }
 
-        }
+            }}
         strcpy(buf, "");
         free_cmd(cmd);
     }
