@@ -4,12 +4,12 @@
 int builtin_export(struct command* cmd, struct envVar_t* EV){
     char varName[80];
     strcpy(varName, "$");
-    if(cmd->argc > 4){
-        printf("export: too many arguments\n");
+    if (cmd->argc < 3){
+        printf("usage: export VARIABLE_NAME = <value>\n");
         return 1;
     }
-    else if (cmd->argc < 3){
-        printf("usage: export VARIABLE_NAME = <value>\n");
+    else if(cmd->argc > 4 || (strcmp(cmd->argv[3], "=") != 0)){
+        printf("export: too many arguments\n");
         return 1;
     }
     if(cmd->argc == 4){
