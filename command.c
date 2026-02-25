@@ -31,7 +31,7 @@ struct command * parse_cmd(const char *buf, int len)
             if (buf[i] == '\"' || buf[i] == '\''){
                 isAQuote = 1;
                 beg++;
-                printf("ye1\n");
+                
                 
             }
         }
@@ -39,11 +39,9 @@ struct command * parse_cmd(const char *buf, int len)
             cmd->argv[cmd->argc++] = strndup(buf + beg, i - beg);
         }
         else if ((buf[i] == '\"' || buf[i] == '\'') && (isAQuote == 1)){
-            cmd->argv[cmd->argc++] = strndup(buf + beg-1, (i - beg)+2);
+            cmd->argv[cmd->argc++] = strndup(buf + beg, (i - beg));
 
             isAQuote = 0;
-            printf("ye2\n");
-            prev = buf[i];
             break;
         }
         prev = buf[i];
@@ -52,7 +50,6 @@ struct command * parse_cmd(const char *buf, int len)
     cmd->argv[cmd->argc] = NULL;
     return cmd;
 }
-
 
 void free_cmd(struct command* cmd){
     for(int i = 0; i<cmd->argc;i++){

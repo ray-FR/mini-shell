@@ -3,7 +3,7 @@
 #include "command.h"
 
 int builtin_exit(struct command* cmd){
-    (void) cmd,
+    free_cmd(cmd);
 
     exit(0);
     return 0;
