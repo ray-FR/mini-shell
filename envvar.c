@@ -24,6 +24,14 @@ void replaceEnvVar(struct envVar_t* EV ,struct command* cmd){
     }
 }
 
+void updateEnvVar(struct envVar_t* EV){
+    if (getcwd(EV->vars[0]->value, 512) == NULL){perror("getcwd"); exit(1);}
+    char* ec = getlogin();
+    (strcpy(EV->vars[1]->value, ec));
+    
+
+}
+
 void freeEnvVar(struct envVar_t* EV){
     for (int i = 0; i<EV->nbVar; i++ ){
         free(EV->vars[i]);

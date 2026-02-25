@@ -17,4 +17,5 @@ struct envVar_t {
 
 struct envVar_t * initEnvVar();
 void replaceEnvVar(struct envVar_t* EV, struct command* cmd);
+void updateEnvVar(struct envVar_t* EV);
 void freeEnvVar(struct envVar_t* EV);
