@@ -72,8 +72,6 @@ int main(){
 
     while(1){
         
-        for (int i = 0; i<EV->nbVar; i++)
-            printf("%s\n", EV->vars[i]->ENVVAR);
 
         getFullLogin();
 
