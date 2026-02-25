@@ -66,10 +66,10 @@ int main(){
     struct envVar_t* EV;
 
     signal(SIGINT, SIG_IGN);
-
+    EV = initEnvVar();
 
     while(1){
-        EV = initEnvVar();
+        
 
         getFullLogin();
         fgets(buf, 256, stdin);
@@ -111,8 +111,10 @@ int main(){
             }}
         strcpy(buf, "");
         free_cmd(cmd);
-        freeEnvVar(EV);
+        updateEnvVar(EV);
+        
     }
+    freeEnvVar(EV);
 
 
 
