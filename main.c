@@ -82,6 +82,7 @@ int main(){
             secondCmd = strndup(pipe+1, strlen(buf)); 
             cmd = parse_cmd(firstCmd, strlen(firstCmd));
             cmd2 = parse_cmd(secondCmd, strlen(secondCmd));
+            printf("%s\n", cmd2->argv[1]);
             exec_piped_cmds(cmd, cmd2);
             free_cmd(cmd2);
             strcpy(firstCmd, "");
@@ -90,6 +91,7 @@ int main(){
         else {
             cmd = parse_cmd(buf, strlen(buf));
             commandIndex = find_builtin(cmd->argv[0]);
+            printf("%s\n", cmd->argv[1]);
             if (commandIndex >= 0){
                 builtins[commandIndex].func(cmd);
                 strcpy(fullLogin, "");

@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include "command.h"
 
-void exec_piped_cmds(struct command* cmd1, struct command* cmd2){
+int exec_piped_cmds(struct command* cmd1, struct command* cmd2){
     pid_t pid1;
     pid_t pid2;
 
@@ -37,15 +37,18 @@ void exec_piped_cmds(struct command* cmd1, struct command* cmd2){
             exit(1);
         }
         close(fd[1]);
-        execvp(cmd2->argv[0], &(cmd2->argv[0]));
+        int errc = execvp(cmd2->argv[0], &(cmd2->argv[0]));
+        perror("execvp");
+        return errc;
     }
     else if (pid2 > 0) {
         close(fd[1]);
         close(fd[0]);
         waitpid(pid1, NULL, 0);
         waitpid(pid2, NULL, 0);
+        return 0;
     }
 
 
-
+    return 1;
 }

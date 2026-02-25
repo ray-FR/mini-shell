@@ -26,14 +26,23 @@ struct command * parse_cmd(const char *buf, int len)
     cmd->argv = malloc((n + 1) * sizeof(*cmd->argv));
 
     for (int i = 0; i < len; i++) {
-        if (!isspace(buf[i]) && isspace(prev)) { 
+        if (!isspace(buf[i]) && isspace(prev) && (isAQuote == 0)) { 
             beg = i; 
-            if (strcmp(buf[i], "\"") == 0){
+            if (buf[i] == '\"' || buf[i] == '\''){
                 isAQuote = 1;
+                beg++;
+                printf("ye1\n");
+                
             }
         }
-        else if (isspace(buf[i]) && !isspace(prev) && !isAQuote) {
+        else if (isspace(buf[i]) && !isspace(prev) && (isAQuote == 0)) {
             cmd->argv[cmd->argc++] = strndup(buf + beg, i - beg);
+        }
+        else if ((buf[i] == '\"' || buf[i] == '\'') && (isAQuote == 1)){
+            cmd->argv[cmd->argc++] = strndup(buf + beg-1, (i - beg)+2);
+
+            isAQuote = 0;
+            printf("ye2\n");
         }
         prev = buf[i];
     }
