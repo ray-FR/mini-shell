@@ -24,10 +24,10 @@ struct command * parse_cmd(const char *buf, int len)
     cmd->argv = malloc((n + 1) * sizeof(*cmd->argv));
 
     for (int i = 0; i < len; i++) {
-        if (!isspace(buf[i]) && isspace(prev)) { 
+        if (!isspace(buf[i]) && (isspace(prev) || prev == '=')) { 
             beg = i; 
         }
-        else if (isspace(buf[i]) && !isspace(prev)) {
+        else if ((isspace(buf[i]) || buf[i] == '=') && !isspace(prev)) {
             cmd->argv[cmd->argc++] = strndup(buf + beg, i - beg);
         }
         prev = buf[i];
