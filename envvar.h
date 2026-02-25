@@ -11,6 +11,7 @@ struct EVAR {
 
 struct envVar_t {
     int nbVar;
+    int maxNumber;
     struct EVAR** vars;
 };
 

@@ -4,8 +4,9 @@ struct envVar_t * initEnvVar(){
     struct envVar_t* EV = NULL;
     EV = malloc(sizeof(*EV));
     EV->nbVar = 2;
-    EV->vars = malloc(EV->nbVar * sizeof(*EV->vars));
-    for(int i =0;i<2;i++)
+    EV->maxNumber = 128;
+    EV->vars = malloc(EV->maxNumber * sizeof(*EV->vars));
+    for(int i =0; i<EV->maxNumber; i++)
         EV->vars[i] = malloc(sizeof(*EV->vars[i]));
 
     strcpy(EV->vars[0]->ENVVAR, "$PWD");
