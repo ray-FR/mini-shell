@@ -16,6 +16,7 @@ struct command * parse_cmd(const char *buf, int len)
     struct command *cmd = NULL;
     char prev = ' ';
     int n, beg = 0;
+    int isAQuote = 0;
 
     if ((n = count_args(buf)) == 0) return NULL;
 
@@ -24,12 +25,23 @@ struct command * parse_cmd(const char *buf, int len)
     cmd->argv = malloc((n + 1) * sizeof(*cmd->argv));
 
     for (int i = 0; i < len; i++) {
-        if (!isspace(buf[i]) && (isspace(prev) || prev == '=')) { 
+        if (!isspace(buf[i]) && (isspace(prev) || prev == '=') && (isAQuote == 0)) { 
             beg = i; 
+            if (buf[i] == '\"' || buf[i] == '\''){
+                isAQuote = 1;
+                beg++;
+            }
         }
-        else if ((isspace(buf[i]) || buf[i] == '=') && !isspace(prev)) {
+        else if ((isspace(buf[i]) || buf[i] == '=') && !isspace(prev) && (isAQuote == 0)) {
             cmd->argv[cmd->argc++] = strndup(buf + beg, i - beg);
         }
+        else if ((buf[i] == '\"' || buf[i] == '\'') && (isAQuote == 1)){
+            cmd->argv[cmd->argc++] = strndup(buf + beg, (i - beg));
+
+            isAQuote = 0;
+            break;
+        }
+
         prev = buf[i];
     }
 
