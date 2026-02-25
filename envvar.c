@@ -14,8 +14,14 @@ struct envVar_t * initEnvVar(){
     strcpy(EV->vars[1]->ENVVAR, "$USER");
     char* ec = getlogin();
     (strcpy(EV->vars[1]->value, ec));
-    //free(ec);
     return EV;
+}
+
+void replaceEnvVar(struct envVar_t* EV ,struct command* cmd){
+    for (int i = 0; i < cmd->argc; i++){
+        for (int j = 0; j<EV->nbVar; j++)
+            if (strcmp(cmd->argv[i], EV->vars[j]->ENVVAR) == 0) {free(cmd->argv[i]); cmd->argv[i] = strdup(EV->vars[j]->value);}
+    }
 }
 
 void freeEnvVar(struct envVar_t* EV){
