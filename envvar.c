@@ -34,7 +34,7 @@ void updateEnvVar(struct envVar_t* EV){
 }
 
 void freeEnvVar(struct envVar_t* EV){
-    for (int i = 0; i<EV->nbVar; i++ ){
+    for (int i = 0; i<EV->maxNumber; i++ ){
         free(EV->vars[i]);
     }
     free(EV->vars);
