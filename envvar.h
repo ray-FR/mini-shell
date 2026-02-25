@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include "command.h"
 
 struct EVAR {
     char ENVVAR[80];
@@ -15,4 +16,5 @@ struct envVar_t {
 
 
 struct envVar_t * initEnvVar();
+void replaceEnvVar(struct envVar_t* EV, struct command* cmd);
 void freeEnvVar(struct envVar_t* EV);
