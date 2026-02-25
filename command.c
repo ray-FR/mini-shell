@@ -43,6 +43,8 @@ struct command * parse_cmd(const char *buf, int len)
 
             isAQuote = 0;
             printf("ye2\n");
+            prev = buf[i];
+            break;
         }
         prev = buf[i];
     }
@@ -50,6 +52,7 @@ struct command * parse_cmd(const char *buf, int len)
     cmd->argv[cmd->argc] = NULL;
     return cmd;
 }
+
 
 void free_cmd(struct command* cmd){
     for(int i = 0; i<cmd->argc;i++){

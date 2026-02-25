@@ -37,9 +37,9 @@ int exec_piped_cmds(struct command* cmd1, struct command* cmd2){
             exit(1);
         }
         close(fd[1]);
-        int errc = execvp(cmd2->argv[0], &(cmd2->argv[0]));
+        execvp(cmd2->argv[0], &(cmd2->argv[0]));
         perror("execvp");
-        return errc;
+        
     }
     else if (pid2 > 0) {
         close(fd[1]);

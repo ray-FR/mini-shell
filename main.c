@@ -74,7 +74,6 @@ int main(){
     signal(SIGINT, SIG_IGN);
 
     while(1){
-        
         printf("%s ", fullLogin);
         fgets(buf, 256, stdin);
         if ((pipe = strchr(buf, '|')) != NULL){
