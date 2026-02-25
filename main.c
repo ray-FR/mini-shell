@@ -4,6 +4,7 @@
 #include <unistd.h>
 #include <signal.h>
 #include "command.h"
+#include "envvar.h"
 
 #define NB_BUILTINS 2
 
@@ -22,30 +23,24 @@ struct builtin {
 };
 
 
-char* getFullLogin(void){
-    char* name;
-    char host[256];
-    char cwd[256];
+void getFullLogin(void){
+    char *user, host[64],wd[512];
 
-    if ((name = getlogin()) == NULL){
-        perror("name");
+    if ((user = getlogin()) == NULL){
+        perror("getlogin");
         exit(1);
     }
-    if (gethostname(host, 256) < 0){
+    if (gethostname(host,64) < 0){
         perror("gethostname");
-        exit(2);
+        exit(1);
     }
-    if (getcwd(cwd, 256) < 0){
+    if (getcwd(wd,512) < 0){
         perror("getcwd");
-        exit(3);
+        exit(1);
     }
+    fprintf(stderr,"%s@%s:%s$ ", user,host,wd);
     
-    strcat(name, "@");
-    strcat(name, host);
-    strcat(name, ":");
-    strcat(name, cwd);
     
-    return name;
 }
 
 int find_builtin(char* command){
@@ -59,7 +54,6 @@ int find_builtin(char* command){
 }
 
 int main(){
-    char* fullLogin;
     char* pipe;
     char* firstCmd;
     char* secondCmd;
@@ -70,12 +64,10 @@ int main(){
     struct command* cmd;
     struct command* cmd2;
 
-    fullLogin = getFullLogin();
     signal(SIGINT, SIG_IGN);
 
     while(1){
-        
-        printf("%s ", fullLogin);
+        getFullLogin();
         fgets(buf, 256, stdin);
         if ((pipe = strchr(buf, '|')) != NULL){
             firstCmd = strndup(buf, pipe-buf); 
@@ -92,8 +84,8 @@ int main(){
             commandIndex = find_builtin(cmd->argv[0]);
             if (commandIndex >= 0){
                 builtins[commandIndex].func(cmd);
-                strcpy(fullLogin, "");
-                fullLogin = getFullLogin();
+                
+                
             }
             else{
                 printf("mini-shell: built_in command not found: %s\n", buf);
