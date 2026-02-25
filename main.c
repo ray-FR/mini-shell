@@ -63,17 +63,23 @@ int main(){
     int commandIndex;
     struct command* cmd;
     struct command* cmd2;
+    struct envVar_t* EV;
 
     signal(SIGINT, SIG_IGN);
 
+
     while(1){
+        EV = initEnvVar();
+
         getFullLogin();
         fgets(buf, 256, stdin);
         if ((pipe = strchr(buf, '|')) != NULL){
             firstCmd = strndup(buf, pipe-buf); 
             secondCmd = strndup(pipe+1, strlen(buf)); 
             cmd = parse_cmd(firstCmd, strlen(firstCmd));
+            replaceEnvVar(EV, cmd);
             cmd2 = parse_cmd(secondCmd, strlen(secondCmd));
+            replaceEnvVar(EV, cmd2);
             exec_piped_cmds(cmd, cmd2);
             free_cmd(cmd2);
             strcpy(firstCmd, "");
@@ -81,6 +87,8 @@ int main(){
         }
         else {
             cmd = parse_cmd(buf, strlen(buf));
+            replaceEnvVar(EV, cmd);
+
             commandIndex = find_builtin(cmd->argv[0]);
             if (commandIndex >= 0){
                 builtins[commandIndex].func(cmd);
@@ -103,6 +111,7 @@ int main(){
             }}
         strcpy(buf, "");
         free_cmd(cmd);
+        freeEnvVar(EV);
     }
 
 
