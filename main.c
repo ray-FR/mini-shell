@@ -6,11 +6,12 @@
 #include "command.h"
 #include "envvar.h"
 
-#define NB_BUILTINS 2
+#define NB_BUILTINS 3
 
 int builtin_exit(struct command* cmd);
 int builtin_cd(struct command* cmd);
 int exec_cmd(struct command* cmd);
+int builtin_export(struct command* cmd, struct envVar_t* EV);
 void exec_piped_cmds(struct command* cmd1, struct command* cmd2);
 
 
@@ -20,6 +21,7 @@ struct builtin {
 } builtins[NB_BUILTINS] = {
     { "exit", builtin_exit},
     { "cd", builtin_cd},
+    { "export", NULL},
 };
 
 
@@ -70,8 +72,11 @@ int main(){
 
     while(1){
         
+        for (int i = 0; i<EV->nbVar; i++)
+            printf("%s\n", EV->vars[i]->ENVVAR);
 
         getFullLogin();
+
         fgets(buf, 256, stdin);
         if ((pipe = strchr(buf, '|')) != NULL){
             firstCmd = strndup(buf, pipe-buf); 
@@ -88,10 +93,10 @@ int main(){
         else {
             cmd = parse_cmd(buf, strlen(buf));
             replaceEnvVar(EV, cmd);
-
             commandIndex = find_builtin(cmd->argv[0]);
             if (commandIndex >= 0){
-                builtins[commandIndex].func(cmd);
+                if (commandIndex == 2) builtin_export(cmd, EV);
+                else builtins[commandIndex].func(cmd);
                 
                 
             }
