@@ -5,6 +5,10 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+#include <unistd.h>
+#include <sys/wait.h>
+#include <signal.h>
+
 
 struct command {
     int argc;

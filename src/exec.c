@@ -1,6 +1,3 @@
-#include <unistd.h>
-#include <sys/wait.h>
-#include <signal.h>
 #include "command.h"
 
 int exec_cmd(struct command* cmd){
