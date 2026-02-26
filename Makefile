@@ -1,6 +1,6 @@
 
-SRC = $(wildcard *.c)
-OBJ = $(patsubst %.c,./obj/%.o,$(SRC))
+SRC = $(wildcard ./src/*.c)
+OBJ = $(patsubst ./src/%.c,./obj/%.o,$(SRC))
 BIN = $(subst .c,,$(SRC))
 
 mini-shell: $(OBJ)
@@ -9,7 +9,7 @@ mini-shell: $(OBJ)
 %: %.c
 	gcc -W -Wall -Werror -DSTANDALONE $< -o $@
 
-./obj/%.o: %.c
+./obj/%.o: ./src/%.c
 	@mkdir -p ./obj
 	gcc -c -W -Wall -g -Werror $< -o $@
 
