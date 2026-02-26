@@ -22,6 +22,7 @@ void exec_piped_cmds(struct command* cmd1, struct command* cmd2){
             exit(1);
         }
         close(fd[0]);
+        signal(SIGINT, SIG_DFL);
         execvp(cmd1->argv[0], &(cmd1->argv[0]));
 
 
@@ -37,6 +38,7 @@ void exec_piped_cmds(struct command* cmd1, struct command* cmd2){
             exit(1);
         }
         close(fd[1]);
+        signal(SIGINT, SIG_DFL);
         execvp(cmd2->argv[0], &(cmd2->argv[0]));
     }
     else if (pid2 > 0) {
@@ -44,6 +46,7 @@ void exec_piped_cmds(struct command* cmd1, struct command* cmd2){
         close(fd[0]);
         waitpid(pid1, NULL, 0);
         waitpid(pid2, NULL, 0);
+        signal(SIGINT, SIG_IGN);
     }
 
 
