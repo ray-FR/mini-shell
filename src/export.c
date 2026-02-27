@@ -8,7 +8,7 @@ int builtin_export(struct command* cmd, struct envVar_t* EV){
         printf("usage: export VARIABLE_NAME = <value>\n");
         return 1;
     }
-    else if(cmd->argc > 4 || (strcmp(cmd->argv[3], "=") != 0)){
+    else if(cmd->argc > 4 || (strcmp(cmd->argv[2], "=") != 0)){
         printf("export: too many arguments\n");
         return 1;
     }
