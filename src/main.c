@@ -13,6 +13,7 @@ int builtin_cd(struct command* cmd);
 int exec_cmd(struct command* cmd);
 int builtin_export(struct command* cmd, struct envVar_t* EV);
 void exec_piped_cmds(struct command* cmd1, struct command* cmd2);
+void builtin_redirect(struct command* cmd);
 
 
 struct builtin {
@@ -76,7 +77,13 @@ int main(){
         getFullLogin();
 
         fgets(buf, 256, stdin);
-        if ((pipe = strchr(buf, '|')) != NULL){
+        if (strchr(buf, '>') != NULL){
+            cmd = parse_cmd(buf, strlen(buf));
+            builtin_redirect(cmd);
+            free_cmd(cmd);
+
+        }
+        else if ((pipe = strchr(buf, '|')) != NULL){
             firstCmd = strndup(buf, pipe-buf); 
             secondCmd = strndup(pipe+1, strlen(buf)); 
             cmd = parse_cmd(firstCmd, strlen(firstCmd));
