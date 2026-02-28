@@ -21,14 +21,16 @@ int builtin_export(struct command* cmd, struct envVar_t* EV){
         return 0;
 
     }
-    else if (cmd->argc == 3){
+    else if (cmd->argc == 3 && (strcmp(cmd->argv[1], "=") == 0)){
         if(cmd->argv[1][0] == '$') strcpy(varName, cmd->argv[1]);
         else strcat(varName, cmd->argv[1]);
         EV->nbVar++;
         strcpy(EV->vars[EV->nbVar - 1]->ENVVAR, varName);
         strcpy(EV->vars[EV->nbVar - 1]->ENVVAR, cmd->argv[2]);
+        return 0;
 
     }
+    printf("builtin_export: error\n");
     return 1;
 
 }
