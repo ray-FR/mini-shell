@@ -11,5 +11,5 @@ mini-shell: $(OBJ)
 
 clean::
 	rm -rf ./obj/
-	rm -f $(BIN)
+	rm -f ./mini-shell
 	rm -f .DS_Store
