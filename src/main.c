@@ -79,9 +79,9 @@ int main(){
 
         if ((redirect = strchr(buf, '>')) != NULL){
             int typeOfR;
-            if (*(redirect+1) == '>'){
+            if (*(redirect+1) == '>'){ // If '>>' within buffer
                 firstCmd = strndup(buf, (redirect - buf));
-                secondCmd = isspace(*(redirect+2)) ? strndup(redirect+3, strlen(buf)) : strndup(redirect+2, strlen(buf));
+                secondCmd = isspace(*(redirect+2)) ? strndup(redirect+3, strlen(buf)) : strndup(redirect+2, strlen(buf)); //Not a second command in this scenario, but perhaps it's for the best to not declare a new variable just for this scenario
                 secondCmd[strlen(secondCmd)-1] = '\0';
                 cmd = parse_cmd(firstCmd, strlen(firstCmd));
                 typeOfR = 0;
@@ -127,7 +127,7 @@ int main(){
                 for (int i = 0; i < NB_BUILTINS; i++){
                     printf("\t%s\n", builtins[i].name);
                 }
-                printf("\nDo you want to search for commands within the shell? (yes/no) ");
+                printf("\nDo you want to search for commands within the shell? (yes/anything else for no) ");
                 strcpy(buf, "");
                 fgets(buf, 256, stdin);
                 if (strncmp(buf, "yes", 3) == 0){
