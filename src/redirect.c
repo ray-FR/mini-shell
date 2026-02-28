@@ -28,7 +28,6 @@ void builtin_redirect(struct command* cmd, char* fileName, int typeOfRedirection
     else{
         close(fd);
         waitpid(pid, NULL, 0);
-        printf("woo the bullshit worked\n");
     }
 }
 
