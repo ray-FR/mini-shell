@@ -13,6 +13,7 @@ int builtin_cd(struct command* cmd);
 int exec_cmd(struct command* cmd);
 int builtin_export(struct command* cmd, struct envVar_t* EV);
 void exec_piped_cmds(struct command* cmd1, struct command* cmd2);
+void builtin_redirect(struct command* cmd, char* fileName, int typeOfRedirection);
 
 
 struct builtin {
@@ -54,8 +55,10 @@ int find_builtin(char* command){
 
 int main(){
     char* pipe;
+    char* redirect;
     char* firstCmd;
     char* secondCmd;
+
 
 
     char buf[256];
@@ -73,7 +76,30 @@ int main(){
         getFullLogin();
 
         fgets(buf, 256, stdin);
-        if ((pipe = strchr(buf, '|')) != NULL){
+
+        if ((redirect = strchr(buf, '>')) != NULL){
+            int typeOfR;
+            if (*(redirect+1) == '>'){
+                firstCmd = strndup(buf, (redirect - buf));
+                secondCmd = isspace(*(redirect+2)) ? strndup(redirect+3, strlen(buf)) : strndup(redirect+2, strlen(buf));
+                secondCmd[strlen(secondCmd)-1] = '\0';
+                cmd = parse_cmd(firstCmd, strlen(firstCmd));
+                typeOfR = 0;
+
+            }
+            
+            else {
+                firstCmd = strndup(buf, (redirect - buf));
+                secondCmd = isspace(*(redirect+1)) ? strndup(redirect+2, strlen(buf)) : strndup(redirect+1, strlen(buf));
+                secondCmd[strlen(secondCmd)-1] = '\0';
+                cmd = parse_cmd(firstCmd, strlen(firstCmd));
+                typeOfR = 1;
+            }
+
+            replaceEnvVar(EV, cmd);
+            builtin_redirect(cmd, secondCmd, typeOfR);
+        }
+        else if ((pipe = strchr(buf, '|')) != NULL){
             firstCmd = strndup(buf, pipe-buf); 
             secondCmd = strndup(pipe+1, strlen(buf)); 
             cmd = parse_cmd(firstCmd, strlen(firstCmd));
