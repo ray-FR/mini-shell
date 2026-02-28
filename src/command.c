@@ -20,9 +20,12 @@ struct command * parse_cmd(const char *buf, int len)
 
     if ((n = count_args(buf)) == 0) return NULL;
 
-    cmd = malloc(sizeof(*cmd));
+    if ((cmd = malloc(sizeof(*cmd))) == NULL)
+        perror("malloc cmd");
+
     cmd->argc = 0;
-    cmd->argv = malloc((n + 1) * sizeof(*cmd->argv));
+    if ((cmd->argv = malloc((n + 1) * sizeof(*cmd->argv))) == NULL)
+        perror("malloc cmd->argv");
 
     for (int i = 0; i < len; i++) {
         if (!isspace(buf[i]) && (isspace(prev) || prev == '=') && (isAQuote == 0)) { 

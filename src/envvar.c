@@ -2,10 +2,12 @@
 
 struct envVar_t * initEnvVar(){
     struct envVar_t* EV = NULL;
-    EV = malloc(sizeof(*EV));
+    if((EV = malloc(sizeof(*EV))) == NULL)
+        perror("malloc EV");
     EV->nbVar = 2;
     EV->maxNumber = 128;
-    EV->vars = malloc(EV->maxNumber * sizeof(*EV->vars));
+    if ((EV->vars = malloc(EV->maxNumber * sizeof(*EV->vars))) == NULL)
+        perror("malloc EV->vars");
     for(int i =0; i<EV->maxNumber; i++)
         EV->vars[i] = malloc(sizeof(*EV->vars[i]));
 
