@@ -21,7 +21,7 @@ int builtin_export(struct command* cmd, struct envVar_t* EV){
         return 0;
 
     }
-    else if (cmd->argc == 3 && (strcmp(cmd->argv[1], "=") == 0)){
+    else if (cmd->argc == 3){
         if(cmd->argv[1][0] == '$') strcpy(varName, cmd->argv[1]);
         else strcat(varName, cmd->argv[1]);
         EV->nbVar++;
