@@ -98,7 +98,6 @@ int main(){
 
             replaceEnvVar(EV, cmd);
             replaceEnvVar(EV, cmd2);
-            printf("%s\n", cmd2->argv[0]);
             builtin_redirect(cmd, cmd2->argv[0], typeOfR);
             free_cmd(cmd2);
         }
