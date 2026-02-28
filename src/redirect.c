@@ -18,9 +18,10 @@ void builtin_redirect(struct command* cmd, char* fileName, int typeOfRedirection
         exit(1);
     }
     if (pid == 0){
-        if (ftruncate(fd, 0) == 0) 
-            lseek(fd, 0, SEEK_SET); // reposition to start for subsequent writes
-        
+        if (typeOfRedirection == 0){    
+            if (ftruncate(fd, 0) == 0) 
+                lseek(fd, 0, SEEK_SET); // reposition to start for subsequent writes
+        }    
         dup2(fd, 1);
         close(fd);
         execvp(cmd->argv[0], &cmd->argv[0]);
