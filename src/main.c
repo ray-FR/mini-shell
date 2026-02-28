@@ -81,9 +81,9 @@ int main(){
             int typeOfR;
             if (*(redirect+1) == '>'){ // If '>>' within buffer
                 firstCmd = strndup(buf, (redirect - buf));
-                secondCmd = isspace(*(redirect+2)) ? strndup(redirect+3, strlen(buf)) : strndup(redirect+2, strlen(buf)); //Not a second command in this scenario, but perhaps it's for the best to not declare a new variable just for this scenario
-                secondCmd[strlen(secondCmd)-1] = '\0';
+                secondCmd = isspace(*(redirect+2)) ? strndup(redirect+3, strlen(buf)) : strndup(redirect+2, strlen(buf)); 
                 cmd = parse_cmd(firstCmd, strlen(firstCmd));
+                cmd2 = parse_cmd(secondCmd, strlen(secondCmd));
                 typeOfR = 0;
 
             }
@@ -91,13 +91,16 @@ int main(){
             else {
                 firstCmd = strndup(buf, (redirect - buf));
                 secondCmd = isspace(*(redirect+1)) ? strndup(redirect+2, strlen(buf)) : strndup(redirect+1, strlen(buf));
-                secondCmd[strlen(secondCmd)-1] = '\0';
                 cmd = parse_cmd(firstCmd, strlen(firstCmd));
+                cmd2 = parse_cmd(secondCmd, strlen(secondCmd));
                 typeOfR = 1;
             }
 
             replaceEnvVar(EV, cmd);
-            builtin_redirect(cmd, secondCmd, typeOfR);
+            replaceEnvVar(EV, cmd2);
+            printf("%s\n", cmd2->argv[0]);
+            builtin_redirect(cmd, cmd2->argv[0], typeOfR);
+            free_cmd(cmd2);
         }
         else if ((pipe = strchr(buf, '|')) != NULL){
             firstCmd = strndup(buf, pipe-buf); 
