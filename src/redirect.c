@@ -43,13 +43,14 @@ void builtin_redirect(struct command* cmd, char* fileName, int typeOfRedirection
             exit(1);
         }
 
-        
+        signal(SIGINT, SIG_DFL);
         execvp(cmd->argv[0], &cmd->argv[0]);
         perror("execvp");
     }
     else{
         close(fd);
         waitpid(pid, NULL, 0);
+        signal(SIGINT, SIG_IGN);
     }
 }
 
