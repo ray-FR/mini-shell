@@ -1,3 +1,7 @@
+#ifndef ENVVAR_H
+#define ENVVAR_H
+
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -20,3 +24,5 @@ struct envVar_t * initEnvVar();
 void replaceEnvVar(struct envVar_t* EV, struct command* cmd);
 void updateEnvVar(struct envVar_t* EV);
 void freeEnvVar(struct envVar_t* EV);
+
+#endif
