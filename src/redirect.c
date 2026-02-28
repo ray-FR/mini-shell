@@ -46,6 +46,7 @@ void builtin_redirect(struct command* cmd, char* fileName, int typeOfRedirection
         signal(SIGINT, SIG_DFL);
         execvp(cmd->argv[0], &cmd->argv[0]);
         perror("execvp");
+        exit(1);
     }
     else{
         close(fd);

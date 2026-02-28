@@ -21,6 +21,8 @@ void exec_piped_cmds(struct command* cmd1, struct command* cmd2){
         close(fd[0]);
         signal(SIGINT, SIG_DFL);
         execvp(cmd1->argv[0], &(cmd1->argv[0]));
+        perror("execvp1");
+        exit(1);
 
 
     }
@@ -37,6 +39,8 @@ void exec_piped_cmds(struct command* cmd1, struct command* cmd2){
         close(fd[1]);
         signal(SIGINT, SIG_DFL);
         execvp(cmd2->argv[0], &(cmd2->argv[0]));
+        perror("execvp2");
+        exit(1);
     }
     else if (pid2 > 0) {
         close(fd[1]);

@@ -12,6 +12,7 @@ int exec_cmd(struct command* cmd){
         signal(SIGINT, SIG_DFL);
         execvp(cmd->argv[0], &(cmd->argv[0]));
         perror("execvp");
+        exit(1);
         
     } else waitpid(pid, NULL, 0);
     signal(SIGINT, SIG_IGN);
