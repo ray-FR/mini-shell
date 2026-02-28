@@ -34,9 +34,18 @@ void builtin_redirect(struct command* cmd, char* fileName, int typeOfRedirection
                 exit(1);
             }
         }    
-        dup2(fd, 1);
-        close(fd);
+        if (dup2(fd, 1) < 0) {
+            perror("dup2");
+            exit(1);
+        }
+        if (close(fd) < 0){
+            perror("close");
+            exit(1);
+        }
+
+        
         execvp(cmd->argv[0], &cmd->argv[0]);
+        perror("execvp");
     }
     else{
         close(fd);
