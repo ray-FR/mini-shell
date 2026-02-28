@@ -83,16 +83,21 @@ int main(){
         if ((redirect = strchr(buf, '>')) != NULL){
             int typeOfR;
             if (*(redirect+1) == '>'){
-                
-            }
-            
-            else {firstCmd = strndup(buf, (redirect - buf));
-                secondCmd = isspace(*(redirect+1)) ? strndup(redirect+2, strlen(buf)) : strndup(redirect+1, strlen(buf));
+                firstCmd = strndup(buf, (redirect - buf));
+                secondCmd = isspace(*(redirect+2)) ? strndup(redirect+3, strlen(buf)) : strndup(redirect+2, strlen(buf));
                 secondCmd[strlen(secondCmd)-1] = '\0';
                 cmd = parse_cmd(firstCmd, strlen(firstCmd));
                 typeOfR = 0;
-                for (int i = 0; i<cmd->argc; i++) printf("%s\n", cmd->argv[i]);
-                }
+
+            }
+            
+            else {
+                firstCmd = strndup(buf, (redirect - buf));
+                secondCmd = isspace(*(redirect+1)) ? strndup(redirect+2, strlen(buf)) : strndup(redirect+1, strlen(buf));
+                secondCmd[strlen(secondCmd)-1] = '\0';
+                cmd = parse_cmd(firstCmd, strlen(firstCmd));
+                typeOfR = 1;
+            }
 
             replaceEnvVar(EV, cmd);
             builtin_redirect(cmd, secondCmd, typeOfR);
