@@ -37,7 +37,7 @@ void getFullLogin(void){
         perror("gethostname");
         exit(1);
     }
-    getcw(wd, 512); // No checks due to weird behaviour found on my linux VM, where if statement gets triggered even with the command returning 0, thus exiting the program even if it was successful. 
+    getcwd(wd, 512); // No checks due to weird behaviour found on my linux VM, where if statement gets triggered even with the command returning 0, thus exiting the program even if it was successful. 
     fprintf(stderr,"%s@%s:%s$ ", user,host,wd);
     
     
