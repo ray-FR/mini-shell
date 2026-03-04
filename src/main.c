@@ -77,8 +77,18 @@ int main(){
 
         fgets(buf, 256, stdin);
 
-        if ((redirect = strchr(buf, '>')) != NULL){
+        if (((redirect = strchr(buf, '>')) != NULL) || ((redirect = strchr(buf, '<')) != NULL)){
             int typeOfR;
+
+            if (*(redirect) == '<'){
+                firstCmd = strndup(buf, (redirect - buf));
+                secondCmd = isspace(*(redirect+1)) ? strndup(redirect+2, strlen(buf)) : strndup(redirect+1, strlen(buf));
+                cmd = parse_cmd(firstCmd, strlen(firstCmd));
+                cmd2 = parse_cmd(secondCmd, strlen(secondCmd));
+                typeOfR = 2;
+ 
+            }
+
             if (*(redirect+1) == '>'){ // If '>>' within buffer
                 firstCmd = strndup(buf, (redirect - buf));
                 secondCmd = isspace(*(redirect+2)) ? strndup(redirect+3, strlen(buf)) : strndup(redirect+2, strlen(buf)); 
@@ -87,6 +97,7 @@ int main(){
                 typeOfR = 0;
 
             }
+            
             
             else {
                 firstCmd = strndup(buf, (redirect - buf));
@@ -101,6 +112,8 @@ int main(){
             builtin_redirect(cmd, cmd2->argv[0], typeOfR);
             free_cmd(cmd2);
         }
+        
+
         else if ((pipe = strchr(buf, '|')) != NULL){
             firstCmd = strndup(buf, pipe-buf); 
             secondCmd = strndup(pipe+1, strlen(buf)); 
