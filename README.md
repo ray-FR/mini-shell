@@ -174,5 +174,3 @@ Structs----
     - Can only support one quoted text.
     - Does not support quoted text within double quoted text (i.e "hi 'hello' individual").
 
-### Redirect
-    - No support for \'\<\' redirect operator.
