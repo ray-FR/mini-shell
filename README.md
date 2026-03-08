@@ -5,7 +5,7 @@ A university project to create a mini-shell using low-level system functions
 ## Features
 - Single and double quote support
 - Export Environment Variable support (+ ability to create them)
-- Redirect operators (\>, \>\>) support
+- Redirect operators (\>, \>\>, \<) support
 - Basic pipe support (2 args)
 
 ## Overview of the repository
