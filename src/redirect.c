@@ -8,7 +8,7 @@ void builtin_redirect(struct command* cmd, char* fileName, int typeOfRedirection
     pid_t pid;
     
     
-    if ((fd = open(fileName, O_RDWR, S_IRUSR | S_IWUSR)) < 0){
+    if ((fd = open(fileName, O_RDWR | O_CREAT, S_IRUSR | S_IWUSR)) < 0){
         perror("fd");
         exit(1);
     }
