@@ -89,7 +89,7 @@ int main(){
  
             }
 
-            if (*(redirect+1) == '>'){ // If '>>' within buffer
+            else if (*(redirect+1) == '>'){ // If '>>' within buffer
                 firstCmd = strndup(buf, (redirect - buf));
                 secondCmd = isspace(*(redirect+2)) ? strndup(redirect+3, strlen(buf)) : strndup(redirect+2, strlen(buf)); 
                 cmd = parse_cmd(firstCmd, strlen(firstCmd));
